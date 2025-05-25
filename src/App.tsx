@@ -1,12 +1,12 @@
 import "./App.css";
-import FloatingButton from "./components/floating-button/FloatingButton";
 import ScoreBoard from "./components/score-board/score-board";
+import Settings from "./components/score-board/settings";
 
 function App() {
   return (
     <>
       <ScoreBoard />
-      <FloatingButton />;
+      <Settings />
     </>
   );
 }
