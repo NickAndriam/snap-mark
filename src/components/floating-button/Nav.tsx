@@ -1,6 +1,4 @@
 import { Folder, Home, Plus, Settings, UserRound } from "lucide-react";
-import React from "react";
-
 export default function Nav() {
   return (
     <nav className="fixed bottom-0 left-0 w-full">

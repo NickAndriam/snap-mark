@@ -1,4 +1,3 @@
-import React from "react";
 import Score from "./score";
 import board from "@/assets/images/board.png";
 import Timer from "./timer";
@@ -18,7 +17,7 @@ export default function ScoreBoard() {
           <Score name="Hawks" />
           <Score name="Bulls" isReversed />
         </div>
-        <Timer expiryTimestamp={new Date()} />
+        <Timer />
       </div>
     </div>
   );

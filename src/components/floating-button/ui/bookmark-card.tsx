@@ -13,7 +13,7 @@ const BookmarkCard: React.FC<IconProps> = ({ src, name }) => {
   useEffect(() => {
     fetch("https://api.microlink.io/?url=" + encodeURIComponent(src))
       .then((res) => res.json())
-      .then(({ status, data, ...props }) => {
+      .then(({ status, data }) => {
         if (status === "success") {
           setImage(data.image.url);
         }

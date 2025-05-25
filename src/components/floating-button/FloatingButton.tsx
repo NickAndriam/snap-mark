@@ -7,14 +7,16 @@ export default function FloatingButton() {
   const [isHovered, setIsHovered] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-  const [number, setNumber] = useState(0);
+  // const [number, setNumber] = useState(0);
 
-  const saveLink = () => {
-    const links = JSON.parse(localStorage.getItem("floatlink-links") || "[]");
-    links.push({ title: document.title, url: window.location.href });
-    localStorage.setItem("floatlink-links", JSON.stringify(links));
-    alert("Link saved!");
-  };
+  // const saveLink = () => {
+  //   const links = JSON.parse(localStorage.getItem("floatlink-links") || "[]");
+  //   links.push({ title: document.title, url: window.location.href });
+  //   localStorage.setItem("floatlink-links", JSON.stringify(links));
+  //   alert("Link saved!");
+  // };
+
+  console.log(isHovered);
 
   return (
     <>

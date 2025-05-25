@@ -1,30 +1,22 @@
-import {
-  Menu,
-  Pause,
-  Play,
-  RotateCcw,
-  StepBack,
-  StepForward,
-} from "lucide-react";
+import { Menu, Pause, Play, RotateCcw } from "lucide-react";
 import { useState } from "react";
 import { useTimer } from "react-timer-hook";
 
-interface TimerProps {
-  expiryTimestamp?: Date;
-}
+// interface TimerProps {
+//   expiryTimestamp?: Date;
+// }
 
-export default function Timer({ expiryTimestamp }: TimerProps) {
+export default function Timer() {
   const minutesInSeconds = 720;
   // Time
   const time = new Date();
   time.setSeconds(time.getSeconds() + minutesInSeconds); // 600 seconds = 10 minutes
 
-  const { seconds, minutes, isRunning, start, pause, resume, restart } =
-    useTimer({
-      expiryTimestamp: time,
-      autoStart: false,
-      onExpire: () => console.warn("Timer expired"),
-    });
+  const { seconds, minutes, isRunning, pause, resume, restart } = useTimer({
+    expiryTimestamp: time,
+    autoStart: false,
+    onExpire: () => console.warn("Timer expired"),
+  });
 
   const formatTime = (num: number) => num.toString().padStart(2, "0");
 
