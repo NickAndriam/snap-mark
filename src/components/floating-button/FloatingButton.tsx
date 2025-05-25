@@ -25,8 +25,8 @@ export default function FloatingButton() {
           position: "fixed",
           top: "50%",
           transform: "translateY(-50%)",
-          right: 0,
-          // right: isHovered ? "0%" : "-30%", // slide out except for a 10px tab
+          // right: 0,
+          right: isHovered ? "0%" : "-30%", // slide out except for a 10px tab
           width: "30%",
           height: "98%",
           borderRadius: "25px 0 0 25px",
@@ -35,7 +35,7 @@ export default function FloatingButton() {
           transition: "right 0.3s ",
           userSelect: "none",
         }}
-        className="flex flex-col bg-gradient-to-b via-[#CFEFEF]/40 from-[#DBEDF6] to-[#E8E9FD] overflow-hidden px-5"
+        className="flex flex-col bg-gradient-to-b via-[#CFEFEF]/40 from-[#DBEDF6] to-[#E8E9FD] overflow-hidden px-5 text-left"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => setOpenModal(!openModal)}

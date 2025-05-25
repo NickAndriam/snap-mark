@@ -12,7 +12,7 @@ export default function ScoreBoard() {
           className="object-cover w-full h-full"
         />
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="relative flex flex-col gap-2">
         <div className="flex flex-row gap-10 z-10 bg-black/5 backdrop-blur-2xl text-white p-5 rounded-lg">
           <Score name="Hawks" />
           <Score name="Bulls" isReversed />
