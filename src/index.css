@@ -79,7 +79,9 @@ input[type="number"] {
   /* overflow: hidden; */
   margin: 0px !important;
 }
-
+.pressed:hover {
+  cursor: pointer;
+}
 .pressed:active {
   scale: 0.8;
   transition: all 0.1s ease-in-out;
