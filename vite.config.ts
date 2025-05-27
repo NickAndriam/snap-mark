@@ -11,7 +11,11 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["fonts/digital-7.ttf", "images/logo.png"],
+      includeAssets: [
+        "fonts/digital-7 (mono).ttf",
+        "images/logo.png",
+        "images/board.png",
+      ],
       manifest: {
         name: "ScoreBoard App",
         short_name: "ScoreBoard",
