@@ -1,4 +1,4 @@
-import board from "@/assets/images/board.png";
+import board from "/images/board.png";
 import { RotateCcw } from "lucide-react";
 
 export default function RotateScreen() {

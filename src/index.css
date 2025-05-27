@@ -12,7 +12,7 @@ input::-webkit-inner-spin-button {
 
 @font-face {
   font-family: "Digital-7";
-  src: url("./assets/fonts/digital-7/digital-7 (mono).ttf");
+  src: url("/fonts/digital-7.ttf");
 }
 .digital {
   font-family: "Digital-7", sans-serif;
