@@ -18,8 +18,11 @@ export default function SettingsComponent() {
 
   return (
     <>
-      <div className="fixed bottom-5 right-5 bg-black grid place-items-center p-4 border border-white/10 text-white z-100 cursor-pointer rounded-full">
-        <Settings onClick={() => setIsHovered(true)} />
+      <div
+        className="fixed bottom-5 right-5 bg-black grid place-items-center p-4 border border-white/10 text-white z-100 cursor-pointer rounded-full"
+        onClick={() => setIsHovered(true)}
+      >
+        <Settings />
       </div>
       <div
         style={{
