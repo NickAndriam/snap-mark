@@ -1,10 +1,15 @@
 {
   "manifest_version": 3,
-  "name": "SnapMark",
-  "author": "Nick the great",
+  "name": "ScoreBoard",
+  "author": "Nick Andriam",
   "version": "1.0.0",
-  "description": "Advanced bookmark manager",
+  "description": "Advanced ScoreBoard",
   "chrome_url_overrides": {
     "newtab": "index.html"
+  },
+  "icons": {
+    "16": "/pwa-512x512.png",
+    "48": "/pwa-512x512.png",
+    "128": "/pwa-512x512.png"
   }
 }
