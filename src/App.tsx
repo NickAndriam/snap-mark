@@ -10,7 +10,6 @@ function App() {
       <RotateScreen />
       <div className="relative hidden sm:grid md:grid lg:grid bg-black w-screen h-full text-white select-none">
         <ScoreBoard />
-        {/* <Settings /> */}
       </div>
     </>
   );
