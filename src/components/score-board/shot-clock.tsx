@@ -5,14 +5,16 @@ interface ShotClockProps {
   isPlaying: boolean;
   restartTimer: boolean;
   resetShotClock: boolean;
+  defaultTime: number;
 }
 
 export default function ShotClock({
   isPlaying,
   restartTimer,
   resetShotClock,
+  defaultTime,
 }: ShotClockProps) {
-  const [minutesInSeconds, setMinutesInSeconds] = useState(24); // minutesInSeconds
+  const [minutesInSeconds, setMinutesInSeconds] = useState(defaultTime); // minutesInSeconds
 
   // Time
   const time = new Date();
@@ -50,16 +52,23 @@ export default function ShotClock({
   const themeColor = seconds > 10 ? "text-green-500" : "text-red-500";
 
   return (
-    <div className="flex flex-col items-center justify-center gap-1">
-      <h3
-        className={`text-[60px] lg:[90px] font-bold digital leading-none text-green-500 w-16 pressed
+    <div className="flex flex-col items-center justify-center gap-1 ">
+      <input
+        type="number"
+        className={`text-[60px] lg:text-[100px] font-bold digital leading-none text-center w-40
             ${themeColor} cursor-pointer`}
-        onClick={() => restart(time, true)}
-      >
-        {seconds}
-      </h3>
+        value={seconds}
+        onChange={(e) => {
+          const newTime = new Date();
+          newTime.setSeconds(newTime.getSeconds() + Number(e.target.value));
+          restart(newTime, false);
+        }}
+      />
       <div className="flex flex-row items-center justify-center gap-2 opacity-80 border border-green-500">
-        <p className="text-xs text-green-500 border border-green-500 px-2 pressed active:bg-green-500 active:text-white">
+        <p
+          className="text-xs text-green-500 border border-green-500 px-2 pressed active:bg-green-500 active:text-white"
+          onClick={() => restart(time, false)}
+        >
           RESET
         </p>
         <input

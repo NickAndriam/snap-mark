@@ -5,7 +5,7 @@ interface FoulProps {
 export default function Foul({ fouls, setFouls }: FoulProps) {
   return (
     <div className="digital">
-      <p className="text-2xl lg:text-4xl">Fouls</p>
+      <p className="text-2xl lg:text-3xl xl:text-[3rem] opacity-50">Fouls</p>
       <div className="flex gap-2 items-center justify-center">
         <p
           className="text-4xl opacity-50 pressed"

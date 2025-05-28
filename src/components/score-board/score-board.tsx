@@ -22,10 +22,11 @@ export default function ScoreBoard() {
   });
   const [period, setPeriod] = useState(1);
 
-  // const [shotClock, setShotClock] = useState({
-  //   seconds: 14,
-  //   isRunning: true,
-  // });
+  const [timerAndShotclock] = useState({
+    shotclock: 24,
+    timer: 720,
+    isRunning: true,
+  });
 
   const [defaultScore] = useState<number>(0);
   const [startTimer, setStartTimer] = useState<boolean>(false);
@@ -68,20 +69,21 @@ export default function ScoreBoard() {
     <div className="flex">
       {/* Left Bar */}
       <div className="fixed left-0 top-0 flex flex-col items-center justify-between lg:justify-evenly h-full w-10 py-4 lg:py-0 z-100">
-        {startTimer ? (
-          <Pause
-            size={30}
-            className="opacity-60 text-green-500 pressed"
-            onClick={() => setStartTimer(false)}
-          />
-        ) : (
-          <Play
-            size={30}
-            className="opacity-60 text-green-500 pressed"
-            onClick={() => setStartTimer(true)}
-          />
-        )}
-
+        <div>
+          {startTimer ? (
+            <Pause
+              size={30}
+              className="opacity-60 text-green-500 pressed"
+              onClick={() => setStartTimer(false)}
+            />
+          ) : (
+            <Play
+              size={30}
+              className="opacity-60 text-green-500 pressed"
+              onClick={() => setStartTimer(true)}
+            />
+          )}
+        </div>
         <ScoreButtons
           score={homeTeam.score}
           getScore={(point) =>
@@ -93,7 +95,7 @@ export default function ScoreBoard() {
         />
       </div>
       {/* Main Scoreboard */}
-      <div className="relative select-none text-white w-full flex flex-col gap-2 items-center justify-evenly px-20 lg:px-40 xl:px-96 lg:py-20">
+      <div className="relative select-none text-white w-full flex flex-col gap-2 items-center justify-evenly px-20 lg:px-30 xl:px-50 2xl:px-70 lg:py-20">
         {/* Timer, Fouls */}
         <div className="w-full flex items-center justify-between">
           <Foul
@@ -102,14 +104,18 @@ export default function ScoreBoard() {
               setHomeTeam({ ...homeTeam, fouls: currentFouls })
             }
           />
-          <div className="w-full">
-            <div className="w-full mt-2">
+          <div className="w-full space-y-5 lg:space-y-10">
+            <div className="w-full ">
               <input
-                className="text-3xl w-full digital text-white/80 text-center opacity-80"
+                className="text-3xl w-full digital text-white/80 lg:text-[80px] text-center "
                 defaultValue="BasketBall Tournament 2025 "
               />
             </div>
-            <Timer isPlaying={startTimer} restartTimer={restartTimer} />
+            <Timer
+              isPlaying={startTimer}
+              restartTimer={restartTimer}
+              defaultTime={timerAndShotclock.timer}
+            />
           </div>
           <Foul
             fouls={awayTeam.fouls}
@@ -136,6 +142,7 @@ export default function ScoreBoard() {
               isPlaying={startTimer}
               restartTimer={restartTimer || resetShotClock}
               resetShotClock={resetShotClock}
+              defaultTime={timerAndShotclock.shotclock}
             />
             <Period period={period} setPeriod={setPeriod} />
           </div>
