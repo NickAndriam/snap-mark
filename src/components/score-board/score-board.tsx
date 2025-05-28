@@ -1,6 +1,6 @@
 import Score from "./score";
 import Timer from "./timer";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Pause, Play, RotateCcw } from "lucide-react";
 import ShotClock from "./shot-clock";
 import Foul from "./foul";
@@ -65,6 +65,52 @@ export default function ScoreBoard() {
     return () => clearTimeout(timeout);
   }, [homeTeam.score, awayTeam.score]);
 
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    // if (e.repeat) return; // Prevent holding key
+    console.log("Current key: ", e.key);
+    if (e.shiftKey && e.key === "ArrowUp") {
+      setAwayTeam((prev) => ({ ...prev, score: prev.score + 1 }));
+      return;
+    }
+    if (e.shiftKey && e.key === "ArrowDown") {
+      setAwayTeam((prev) => ({ ...prev, score: prev.score - 1 }));
+      return;
+    }
+    switch (e.key) {
+      case "ArrowUp": // Home +1
+        setHomeTeam((prev) => ({
+          ...prev,
+          score: Math.max(0, prev.score + 1),
+        }));
+        break;
+      case "ArrowDown": // Home -1
+        setHomeTeam((prev) => ({
+          ...prev,
+          score: Math.max(0, prev.score - 1),
+        }));
+        break;
+
+      case "Backspace": // Reset ShotClock
+        setResetShotClock(true);
+        setTimeout(() => {
+          setResetShotClock(false);
+        }, 100);
+        break;
+      case "r": // Reset Everything
+        onFullReset();
+        break;
+      case " ": // Spacebar: start/stop timer
+        setStartTimer((prev) => !prev);
+        break;
+      default:
+        break;
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
   return (
     <div className="flex">
       {/* Left Bar */}
