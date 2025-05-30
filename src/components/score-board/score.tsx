@@ -1,37 +1,51 @@
+import { useAwayTeamStore } from "@/store/awayTeam";
+import { useHomeTeamStore } from "@/store/homeTeam";
+
 interface ScoreProps {
-  isReversed?: boolean;
-  teamName: string;
-  reset?: boolean;
-  defaultScore?: number;
-  score?: number;
-  setScore?: (score: number) => void;
+  type?: string;
 }
 
-export default function Score({
-  isReversed = false,
-  teamName,
-  score = 0,
-}: ScoreProps) {
+export default function Score({ type }: ScoreProps) {
+  const { name, score, setName } = useHomeTeamStore((state) => state);
+
+  const {
+    name: awayName,
+    score: awayScore,
+    setName: setAwayName,
+  } = useAwayTeamStore((state) => state);
+
+  const formatScore = () => {
+    if (type === "home") {
+      if (score < 10) {
+        return `0${score}`;
+      }
+      return score;
+    } else {
+      if (awayScore < 10) {
+        return `0${awayScore}`;
+      }
+      return awayScore;
+    }
+  };
   return (
     <div className="flex flex-col items-center justify-center text-left min-w-auto max-w-[150px] lg:min-w-[200px] lg:max-w-[250px] gap-4">
       <input
-        placeholder="test"
+        placeholder="Name"
         className="text-4xl lg:text-6xl font-bold mb-5 w-full text-center"
-        defaultValue={teamName}
+        onChange={(e) =>
+          type === "home"
+            ? setName(e.target.value)
+            : setAwayName(e.target.value)
+        }
+        value={type === "home" ? name : awayName}
       />
-      <div
-        style={{ flexDirection: isReversed === true ? "row-reverse" : "row" }}
-        className="flex items-center justify-end"
-      >
+      <div className="flex items-center justify-end">
         {/* Score and button */}
         <h3 className="text-[200px] lg:text-[300px] xl:text-[400px]  font-bold digital leading-none">
-          {score < 10 ? `0${score}` : score}
+          {formatScore()}
         </h3>
       </div>
-      <div
-        style={{ justifyContent: isReversed === true ? "left" : "right" }}
-        className="flex items-center gap-4"
-      ></div>
+      <div className="flex items-center gap-4"></div>
     </div>
   );
 }

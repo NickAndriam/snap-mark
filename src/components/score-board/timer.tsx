@@ -1,23 +1,15 @@
+import { useTime } from "@/lib/hooks";
+import { useTimerStore } from "@/store/timer";
 import { useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
 
-interface TimerProps {
-  isPlaying: boolean;
-  restartTimer: boolean;
-  defaultTime: number;
-}
-
-export default function Timer({
-  defaultTime,
-  isPlaying,
-  restartTimer,
-}: TimerProps) {
-  const [inputTime, setInputTime] = useState(defaultTime);
+export default function Timer() {
+  const { timer, isRunning, restartTimer } = useTimerStore((state) => state);
+  const [inputTime, setInputTime] = useState(timer);
   const [editing, setEditing] = useState(false);
 
   // Time
-  const time = new Date();
-  time.setSeconds(time.getSeconds() + defaultTime);
+  const time = useTime(timer);
 
   const { seconds, minutes, pause, resume, restart } = useTimer({
     expiryTimestamp: time,
@@ -26,14 +18,15 @@ export default function Timer({
   });
 
   useEffect(() => {
-    if (isPlaying) {
+    if (isRunning) {
       resume();
     } else {
       pause();
     }
     if (restartTimer) restart(time, false);
-  }, [isPlaying, pause, resume, restartTimer]);
+  }, [isRunning, pause, resume, restartTimer]);
 
+  // Format time to have 0 is digit is 1
   const formatTime = (num: number) => num.toString().padStart(2, "0");
 
   const onChangeTimer = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +48,7 @@ export default function Timer({
       : "text-red-600";
 
   return (
-    <div className="flex items-center justify-center text-white rounded-lg">
+    <div className="flex flex-col items-center justify-center text-white rounded-lg">
       <div>
         {editing ? (
           <input
@@ -75,6 +68,12 @@ export default function Timer({
           </span>
         )}
       </div>
+      {/* <div
+        className={`${themeColor} opacity-50 cursor-pointer`}
+        onClick={() => setRestartTimer(true)}
+      >
+        <p>RESET</p>
+      </div> */}
     </div>
   );
 }

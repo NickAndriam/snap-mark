@@ -1,53 +1,43 @@
-import { useEffect, useState } from "react";
+import { useTime } from "@/lib/hooks";
+import { useTimerStore } from "@/store/timer";
+import { useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 
-interface ShotClockProps {
-  isPlaying: boolean;
-  restartTimer: boolean;
-  resetShotClock: boolean;
-  defaultTime: number;
-}
+export default function ShotClock() {
+  const { isRunning, shotClock, restartShotClock } = useTimerStore(
+    (state) => state
+  );
 
-export default function ShotClock({
-  isPlaying,
-  restartTimer,
-  resetShotClock,
-  defaultTime,
-}: ShotClockProps) {
-  const [minutesInSeconds, setMinutesInSeconds] = useState(defaultTime); // minutesInSeconds
+  // Time hook to get default time
+  const time = useTime(shotClock);
 
-  // Time
-  const time = new Date();
-  time.setSeconds(time.getSeconds() + minutesInSeconds); // 600 seconds = 10 minutes
-
+  // Hook to manipulate the timer
   const { seconds, pause, resume, restart } = useTimer({
     expiryTimestamp: time,
     autoStart: false,
     onExpire: () => {
       const newTime = new Date();
-      newTime.setSeconds(newTime.getSeconds() + minutesInSeconds);
+      newTime.setSeconds(newTime.getSeconds() + shotClock);
       restart(newTime, false);
     },
   });
 
-  // Global Reset
+  // Pause, Play, Restart when 0 Shot Clock
   useEffect(() => {
-    if (isPlaying) {
+    if (isRunning) {
       resume();
     } else {
       pause();
     }
-    if (restartTimer) restart(time, false);
-  }, [isPlaying, pause, resume, restartTimer]);
+    if (shotClock === 0) restart(time, true);
+  }, [isRunning, pause, resume, shotClock, restart]);
 
-  // Reset Shot Clock when resetShotClock is true
+  // Reset Shot Clock when restartShotClock is true
   useEffect(() => {
-    if (resetShotClock) {
-      const newTime = new Date();
-      newTime.setSeconds(newTime.getSeconds() + minutesInSeconds);
-      restart(newTime, false);
+    if (restartShotClock) {
+      restart(time, true);
     }
-  }, [resetShotClock, minutesInSeconds, restart]);
+  }, [restartShotClock, restart]);
 
   const themeColor = seconds > 10 ? "text-green-500" : "text-red-500";
 
@@ -67,19 +57,10 @@ export default function ShotClock({
       <div className="flex flex-row items-center justify-center gap-2 opacity-80 border border-green-500">
         <p
           className="text-xs text-green-500 border border-green-500 px-2 pressed active:bg-green-500 active:text-white"
-          onClick={() => restart(time, false)}
+          onClick={() => restart(time, true)}
         >
           RESET
         </p>
-        <input
-          type="number"
-          className="text-[20px] lg:[20px] w-6 font-bold digital leading-none text-gray-500 text-center p-0"
-          defaultValue={minutesInSeconds}
-          onChange={(e) => {
-            setMinutesInSeconds(Number(e.target.value));
-          }}
-          onBlur={() => restart(time, false)}
-        />
       </div>
     </div>
   );
